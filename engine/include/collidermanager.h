@@ -21,13 +21,13 @@ public:
 };
 
 
-class ColliderManaged : virtual public GameObject, public std::enable_shared_from_this<ColliderManaged> {
+class ColliderManaged : virtual public GameObject {
 private:
     std::weak_ptr<ColliderManager> cm;
 public:
     ColliderManaged(std::weak_ptr<ColliderManager> cm): cm(cm) {}
-    void init() override {
-        cm.lock()->subscribe(id, shared_from_this());
+    void initComponent(std::shared_ptr<ColliderManaged> self) {
+        cm.lock()->subscribe(id, self);
     }
     virtual int getColliderTypeId() = 0;
     virtual void onCollision(std::shared_ptr<ColliderManaged> other) {

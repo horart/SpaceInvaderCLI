@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "gameobject.h"
 #include "collidermanager.h"
 #include "colliderid.h"
@@ -24,15 +26,15 @@ protected:
         return (health -= damage) > 0;
     }
 public:
-    Entity(std::weak_ptr<SpaceInvaderGame> g, int id, Point p, 
-            ColliderId colliderId,
-            int health, Point size):
-        GameObject(g, id, p),
-        ColliderManaged(g.lock()->colliderManager),
-        health(health),
-        colliderId(colliderId),
-        size(size),
-        sm(g.lock()->spriteManager) {}
+    Entity(
+        std::weak_ptr<SpaceInvaderGame> g,
+        ColliderId colliderId,
+        int health, Point size):
+            ColliderManaged(g.lock()->colliderManager),
+            health(health),
+            colliderId(colliderId),
+            size(size),
+            sm(g.lock()->spriteManager) {}
     int getColliderTypeId() override {
         return static_cast<int>(colliderId);
     }

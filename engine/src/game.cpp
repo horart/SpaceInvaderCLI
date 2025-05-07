@@ -7,6 +7,11 @@ void Game::update() {
         obj->update();
     }
     afterUpdate();
+    renderer->clear();
+    for(auto& [id, obj] : objectsById) {
+        renderer->render(*obj);
+    }
+    renderer->flush();
 }
 
 void Game::removeObject(int id) {

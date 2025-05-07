@@ -5,5 +5,5 @@
 char CLIInputManager::getInput() {
     flushinp();
     int c = getch();
-    return c ? c != ERR : 0;
+    return c != ERR? c : 0;
 }

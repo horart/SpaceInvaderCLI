@@ -6,10 +6,8 @@
 #include "point.h"
 #include "renderingprimitives.h"
 
-struct SpriteManager {
-    // Relative coordinates for a crab sprite (11x8 pixels, Type A, Frame 1)
-    // (0,0) is the top-left pixel of the crab's 11x8 bounding box.
-    // Using inline static const for in-class initialization (C++17 and later)
+class SpriteManager {
+private:
     inline static const std::vector<Point> crab_sprite_points = {
         // Row 0 (y=0)
         {3,0}, {7,0},
@@ -28,16 +26,8 @@ struct SpriteManager {
         // Row 7 (y=7)
         {3,7}, {4,7}, {6,7}, {7,7}
     };
-    std::shared_ptr<std::vector<std::shared_ptr<RenderingPrimitive>>> sprites;
-    SpriteManager() {
-        sprites = std::make_shared<std::vector<std::shared_ptr<RenderingPrimitive>>>();
-        for(const auto& point : crab_sprite_points) {
-            sprites->emplace_back(std::make_shared<RenderingCell>(point, Colors::WHITE));
-        }
-    }
-    SpriteManager(const SpriteManager&) = default;
-
-    std::shared_ptr<std::vector<std::shared_ptr<RenderingPrimitive>>> crab() {
-        return sprites;
+public:
+    std::unique_ptr<RenderRange> getCrab() {
+        return std::make_unique<CellsRange>(crab_sprite_points, Colors::WHITE);
     }
 };

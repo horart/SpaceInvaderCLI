@@ -5,15 +5,47 @@
 #include "spaceinvader.h"
 #include "entity.h"
 #include "colliderid.h"
+#include "inputmanager.h"
 #include "point.h"
 
+#include <iostream>
 
-class Player : public Entity {
+class Player : public Entity,
+               public InputManaged,
+               public std::enable_shared_from_this<Player>
+{
 public:
     Player(std::shared_ptr<Game> g, int id):
-        Entity(std::static_pointer_cast<SpaceInvaderGame>(g), id, {1, 1}, ColliderId::PLAYER, 100, {5, 5}) {}
+        GameObject(g, id, {1, 1}),
+        Entity(std::static_pointer_cast<SpaceInvaderGame>(g), ColliderId::PLAYER, 100, {5, 5}),
+        InputManaged(std::static_pointer_cast<SpaceInvaderGame>(g)->inputManager) 
+        {}
 
-    std::shared_ptr<std::vector<std::shared_ptr<RenderingPrimitive>>> getPrimitives() const override {
-        return sm.lock()->sprites;
+    std::unique_ptr<RenderRange> getPrimitives() const override {
+        return sm.lock()->getCrab();
+    }
+
+    void init() override {
+        InputManaged::initComponent(shared_from_this());
+        ColliderManaged::initComponent(shared_from_this());
+    }
+
+    void onInput(char c)  {
+        switch (c) {
+            case 'w':
+                setPosition({getPosition().x, getPosition().y - 1});
+                break;
+            case 's':
+                setPosition({getPosition().x, getPosition().y + 1});
+                break;
+            case 'a':
+                setPosition({getPosition().x - 1, getPosition().y});
+                break;
+            case 'd':
+                setPosition({getPosition().x + 1, getPosition().y});
+                break;
+            default:
+                break;
+        }
     }
 };

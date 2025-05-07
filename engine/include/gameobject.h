@@ -3,11 +3,14 @@
 #include <memory>
 
 #include "renderer.h"
+#include "renderingprimitives.h"
+
 
 class Game;
 
 
-class GameObject : public Renderable {
+class GameObject : public Renderable
+{
 private:
     std::weak_ptr<Game> game;
     Point pos;
@@ -25,7 +28,7 @@ public:
     GameObject(std::weak_ptr<Game> g, int id, Point p = {0, 0});
     virtual void init() {}
     Point getPosition() const override;
-    std::shared_ptr<std::vector<std::shared_ptr<RenderingPrimitive>>> getPrimitives() const override;
+    std::unique_ptr<RenderRange> getPrimitives() const override;
     void update();
     void destroy();
     virtual ~GameObject() = default;

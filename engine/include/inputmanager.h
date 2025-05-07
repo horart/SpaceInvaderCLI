@@ -19,11 +19,14 @@ public:
     virtual ~InputManager() = default;
 };
 
-class InputManaged : virtual public GameObject, public std::enable_shared_from_this<InputManaged> {
+class InputManaged : virtual public GameObject {
 private:
     std::weak_ptr<InputManager> im;
 public:
     InputManaged(std::weak_ptr<InputManager> im): im(im) {}
+    void initComponent(std::shared_ptr<InputManaged> self) {
+        im.lock()->subscribe(id, self);
+    }
     virtual void onInput(char c) {
         (void)c;
     }

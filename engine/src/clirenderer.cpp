@@ -19,7 +19,7 @@ CLIRenderer::CLIRenderer() {
     initscr();
     start_color();
     curs_set(0);
-    nodelay(stdscr, TRUE);
+    timeout(1000);
     getmaxyx(stdscr, maxY, maxX);
 }
 
@@ -43,6 +43,12 @@ void CLIRenderer::renderPrimitive(const RenderingText& text, Point pos) {
     chooseColor(text.color, text.bgColor);
     printw("%s", text.text.c_str());
     refresh();
+}
+void CLIRenderer::flush() {
+    refresh();
+}
+void CLIRenderer::clear() {
+    ::clear();
 }
 
 CLIRenderer::~CLIRenderer() {

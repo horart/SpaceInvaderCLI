@@ -3,13 +3,14 @@
 
 GameObject::GameObject(std::weak_ptr<Game> g, int id, Point p)
     : game(g), pos(p), posToBeSet(p), id(id) {
+    
 }
 
 Point GameObject::getPosition() const {
     return pos;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<RenderingPrimitive>>> GameObject::getPrimitives() const {
+std::unique_ptr<RenderRange> GameObject::getPrimitives() const {
     return {};
 }
 

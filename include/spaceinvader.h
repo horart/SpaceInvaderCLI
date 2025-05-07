@@ -11,12 +11,12 @@
 class SpaceInvaderGame : public Game {
 
 public:
-    CLIRenderer renderer;
     std::shared_ptr<CLIInputManager> inputManager;
     std::shared_ptr<ColliderManager> colliderManager;
     std::shared_ptr<SpriteManager> spriteManager;
 public:
-    SpaceInvaderGame(): 
+    SpaceInvaderGame(std::unique_ptr<Renderer> renderer): 
+        Game(std::move(renderer)),
         inputManager(std::make_shared<CLIInputManager>()),
         colliderManager(std::make_shared<ColliderManager>()),
         spriteManager(std::make_shared<SpriteManager>())
@@ -28,11 +28,4 @@ public:
         inputManager->notify();
         colliderManager->notify();
     }
-    void afterUpdate() override {
-        for(auto& [id, obj] : objectsById) {
-            renderer.render(*obj);
-        }
-    }
-
-
 };

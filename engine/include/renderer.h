@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <vector>
 
 #include "point.h"
 #include "renderingprimitives.h"
@@ -9,7 +8,7 @@
 
 class Renderable {
 public:
-    virtual std::shared_ptr<std::vector<std::shared_ptr<RenderingPrimitive>>> getPrimitives() const = 0;
+    virtual std::unique_ptr<RenderRange> getPrimitives() const = 0;
     virtual Point getPosition() const = 0;
     virtual ~Renderable() {}
 };
@@ -19,7 +18,9 @@ class Renderer {
 public:
     virtual void renderPrimitive(const RenderingCell&, Point pos) = 0;
     virtual void renderPrimitive(const RenderingText&, Point pos) = 0;
-    
+    virtual void flush() = 0;
+    virtual void clear() = 0;
+
     Renderer() = default;
     Renderer(const Renderer&) = delete;
     void render(Renderable& renderable) {
@@ -27,7 +28,9 @@ public:
             return;
         }
         Point pos = renderable.getPosition();
-        for(std::shared_ptr<const RenderingPrimitive> prim : *renderable.getPrimitives()) {
+        std::unique_ptr<RenderRange> range = renderable.getPrimitives();
+        for(auto it = range->begin(), end = range->end(); *it != *end; ++*it) {
+            auto prim = **it;
             prim->accept(*this, pos);
         }
     }

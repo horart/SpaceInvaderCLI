@@ -17,6 +17,8 @@ public:
 
     void renderPrimitive(const RenderingCell&, Point pos) override;
     void renderPrimitive(const RenderingText&, Point pos) override;
+    void clear() override;
+    void flush() override;
 
     ~CLIRenderer();
 };
