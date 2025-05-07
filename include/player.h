@@ -32,5 +32,13 @@ public:
 
     void onInput(char c) override;
 
+    void onCollision(std::shared_ptr<ColliderManaged> other) override {
+        if(other->getColliderTypeId() == static_cast<int>(ColliderId::ENEMY)) {
+            if(!makeDamage(20)) {
+                destroy();
+            }
+        }
+    }
+
     ~Player() = default;
 };

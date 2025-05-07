@@ -11,7 +11,7 @@ class ColliderManaged;
 
 class ColliderManager {
 private:
-    std::unordered_map<int, std::shared_ptr<ColliderManaged>> collidersById;
+    std::unordered_map<int, std::weak_ptr<ColliderManaged>> collidersById;
 public:
     ColliderManager();
     void subscribe(int id, std::shared_ptr<ColliderManaged> collider);

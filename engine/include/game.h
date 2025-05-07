@@ -3,6 +3,7 @@
 #include <memory>
 #include <unordered_map>
 #include <utility>
+#include <queue>
 
 #include "renderer.h"
 
@@ -12,6 +13,7 @@ class Game : public std::enable_shared_from_this<Game> {
 private:
     int lastId = 0;
     std::unique_ptr<Renderer> renderer;
+    std::queue<int> toDestroy;
 protected:
     std::unordered_map<int, std::shared_ptr<GameObject>> objectsById;
 private:

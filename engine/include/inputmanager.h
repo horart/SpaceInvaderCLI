@@ -9,7 +9,7 @@ class InputManaged;
 
 class InputManager {
 private:
-    std::unordered_map<int, std::shared_ptr<InputManaged>> objectsById;
+    std::unordered_map<int, std::weak_ptr<InputManaged>> objectsById;
 private:
     virtual char getInput() = 0;
 public:

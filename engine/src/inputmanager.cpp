@@ -10,6 +10,6 @@ void InputManager::unsubscribe(int id) {
 void InputManager::notify() {
     char c = getInput();
     for(auto& [id, obj] : objectsById) {
-        obj->onInput(c);
+        obj.lock()->onInput(c);
     }
 }

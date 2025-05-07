@@ -3,6 +3,11 @@
 
 void Game::update() {
     beforeUpdate();
+    while(!toDestroy.empty()) {
+        int id = toDestroy.front();
+        objectsById.erase(id);
+        toDestroy.pop();
+    }
     for (auto& [id, obj] : objectsById) {
         obj->update();
     }
@@ -15,7 +20,7 @@ void Game::update() {
 }
 
 void Game::removeObject(int id) {
-    objectsById.erase(id);
+    toDestroy.push(id);
 }
 
 Game::~Game() {
