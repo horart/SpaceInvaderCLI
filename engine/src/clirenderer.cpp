@@ -28,21 +28,29 @@ void CLIRenderer::moveToPoint(Point pos) {
 }
 
 void CLIRenderer::chooseColor(Colors fg, Colors bg) {
-    init_pair(1, colorToCLIColor.at(fg), colorToCLIColor.at(bg));
-    attron(COLOR_PAIR(1));
+    short colorPair;
+    if(auto it = colorPairs.find({colorToCLIColor.at(fg), colorToCLIColor.at(bg)});
+            it == colorPairs.end())
+    {
+        colorPairs[{colorToCLIColor.at(fg), colorToCLIColor.at(bg)}] = ++lastUsedColorPair;
+        init_pair(lastUsedColorPair, colorToCLIColor.at(fg), colorToCLIColor.at(bg));
+        colorPair = lastUsedColorPair;
+    }
+    else {
+        colorPair = it->second;        
+    }
+    attron(COLOR_PAIR(colorPair));
 }
 
 void CLIRenderer::renderPrimitive(const RenderingCell& cell, Point pos) {
     moveToPoint(pos + cell.pos);
     chooseColor(Colors::BLACK, cell.color);
     printw(" ");
-    refresh();
 }
 void CLIRenderer::renderPrimitive(const RenderingText& text, Point pos) {
     moveToPoint(pos + text.pos);
     chooseColor(text.color, text.bgColor);
     printw("%s", text.text.c_str());
-    refresh();
 }
 void CLIRenderer::flush() {
     refresh();

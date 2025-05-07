@@ -16,8 +16,7 @@ enum class Colors : int {
     YELLOW,
     PURLE,
     BLUE,
-    BLACK,
-    RANDOM
+    BLACK
 };
 
 class RenderingPrimitive {

@@ -40,10 +40,10 @@ private:
         {0,4}, {1,4}, {2,4}, {3,4}, {4,4}, {5,4}, {6,4}, {7,4}, {8,4}, {9,4}, {10,4}
     };
 public:
+    static Colors getRandomColor() {
+        return static_cast<Colors>(std::rand() % static_cast<int>(Colors::BLACK));
+    }
     std::unique_ptr<RenderRange> getCrab(Colors color) const {
-        if(color == Colors::RANDOM) {
-            color = static_cast<Colors>(std::rand() % static_cast<int>(Colors::RANDOM));
-        }
         return std::make_unique<CellsRange>(crab_sprite_points, color);
     }
     std::unique_ptr<RenderRange> getPlayer() const {
