@@ -12,9 +12,10 @@ class Game;
 class GameObject : public Renderable
 {
 private:
-    std::weak_ptr<Game> game;
     Point pos;
     Point posToBeSet;
+protected:
+    std::weak_ptr<Game> game;
 public:
     int id;
 

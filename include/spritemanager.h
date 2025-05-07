@@ -43,8 +43,14 @@ public:
     static Colors getRandomColor() {
         return static_cast<Colors>(std::rand() % static_cast<int>(Colors::BLACK));
     }
+    Point getCrabSize() const {
+        return {10, 8};
+    }
     std::unique_ptr<RenderRange> getCrab(Colors color) const {
         return std::make_unique<CellsRange>(crab_sprite_points, color);
+    }
+    Point getPlayerSize() const {
+        return {10, 5};
     }
     std::unique_ptr<RenderRange> getPlayer() const {
         return std::make_unique<CellsRange>(player_sprite_points, Colors::GREEN);

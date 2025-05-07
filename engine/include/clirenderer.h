@@ -22,6 +22,7 @@ public:
     void renderPrimitive(const RenderingText&, Point pos) override;
     void clear() override;
     void flush() override;
+    Point getGameSize() const override;
 
     ~CLIRenderer();
 };

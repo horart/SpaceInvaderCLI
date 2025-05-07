@@ -14,13 +14,17 @@ private:
     int lastId = 0;
     std::unique_ptr<Renderer> renderer;
     std::queue<int> toDestroy;
+    Point gameSize;
 protected:
     std::unordered_map<int, std::shared_ptr<GameObject>> objectsById;
 private:
     virtual void beforeUpdate() {}
     virtual void afterUpdate() {}
 public:
-    Game(std::unique_ptr<Renderer> r) : renderer(std::move(r)) {}
+    Game(std::unique_ptr<Renderer> r) : renderer(std::move(r)), gameSize(renderer->getGameSize()) {}
+    Point getGameSize() const {
+        return gameSize;
+    }
     template <typename T, typename ...Args>
     std::shared_ptr<T> createObject(Args&&... args);
     void update();

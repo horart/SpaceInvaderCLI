@@ -20,6 +20,7 @@ public:
     virtual void renderPrimitive(const RenderingText&, Point pos) = 0;
     virtual void flush() = 0;
     virtual void clear() = 0;
+    virtual Point getGameSize() const = 0;
 
     Renderer() = default;
     Renderer(const Renderer&) = delete;

@@ -17,7 +17,8 @@ public:
     Colors color;
     Enemy(std::shared_ptr<Game> g, int id):
         GameObject(g, id, {1, 1}),
-        Entity(std::static_pointer_cast<SpaceInvaderGame>(g), ColliderId::ENEMY, 100, {5, 5}),
+        Entity(std::static_pointer_cast<SpaceInvaderGame>(g), ColliderId::ENEMY, 100,
+        std::static_pointer_cast<SpaceInvaderGame>(g)->spriteManager->getCrabSize()),
         color(SpriteManager::getRandomColor())
         {}
 

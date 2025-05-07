@@ -14,10 +14,19 @@ class Player : public Entity,
                public InputManaged,
                public std::enable_shared_from_this<Player>
 {
+private:
+    static Point getBottomCenter(Point gameSize, Point size) {
+        return {
+            (gameSize.x - size.x) / 2,
+            gameSize.y - size.y
+        };
+    }
 public:
     Player(std::shared_ptr<Game> g, int id):
-        GameObject(g, id, {1, 1}),
-        Entity(std::static_pointer_cast<SpaceInvaderGame>(g), ColliderId::PLAYER, 100, {5, 5}),
+        GameObject(g, id, getBottomCenter(g->getGameSize(), 
+                std::static_pointer_cast<SpaceInvaderGame>(g)->spriteManager->getPlayerSize())),
+        Entity(std::static_pointer_cast<SpaceInvaderGame>(g), ColliderId::PLAYER, 100, 
+                std::static_pointer_cast<SpaceInvaderGame>(g)->spriteManager->getPlayerSize()),
         InputManaged(std::static_pointer_cast<SpaceInvaderGame>(g)->inputManager) 
         {}
 
@@ -34,7 +43,7 @@ public:
 
     void onCollision(std::shared_ptr<ColliderManaged> other) override {
         if(other->getColliderTypeId() == static_cast<int>(ColliderId::ENEMY)) {
-            if(!makeDamage(20)) {
+            if(!makeDamage(100)) {
                 destroy();
             }
         }

@@ -58,6 +58,9 @@ void CLIRenderer::flush() {
 void CLIRenderer::clear() {
     ::clear();
 }
+Point CLIRenderer::getGameSize() const {
+    return {maxX, maxY};
+}
 
 CLIRenderer::~CLIRenderer() {
     endwin();
