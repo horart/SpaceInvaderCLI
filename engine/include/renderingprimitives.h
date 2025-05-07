@@ -10,13 +10,14 @@
 class Renderer;
 
 enum class Colors : int {
-    WHITE,
+    WHITE = 0,
     RED,
     GREEN,
     YELLOW,
     PURLE,
     BLUE,
     BLACK,
+    RANDOM
 };
 
 class RenderingPrimitive {

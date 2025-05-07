@@ -22,7 +22,7 @@ public:
         {}
 
     std::unique_ptr<RenderRange> getPrimitives() const override {
-        return sm.lock()->getCrab();
+        return sm.lock()->getPlayer();
     }
 
     void init() override {
