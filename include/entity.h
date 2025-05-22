@@ -10,7 +10,7 @@
 #include "spaceinvader.h"
 
 class Entity:
-    public ColliderManaged
+    virtual public ColliderManaged
 {
 protected:
     int health;
@@ -26,6 +26,7 @@ protected:
         return (health -= damage) > 0;
     }
 public:
+    Entity(): colliderId(ColliderId::BULLET) {}
     Entity(
         std::weak_ptr<SpaceInvaderGame> g,
         ColliderId colliderId,

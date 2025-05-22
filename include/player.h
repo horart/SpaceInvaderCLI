@@ -7,28 +7,26 @@
 #include "colliderid.h"
 #include "inputmanager.h"
 #include "point.h"
+#include "shooter.h"
 
 #include <iostream>
 
-class Player : public Entity,
+class Player :
                public InputManaged,
+               public Shooter,
                public std::enable_shared_from_this<Player>
 {
 private:
-    static Point getBottomCenter(Point gameSize, Point size) {
-        return {
-            (gameSize.x - size.x) / 2,
-            gameSize.y - size.y
-        };
-    }
+    static Point getGameBottomCenter(Point gameSize, Point size);
 public:
     Player(std::shared_ptr<Game> g, int id):
-        GameObject(g, id, getBottomCenter(g->getGameSize(), 
+        GameObject(g, id, getGameBottomCenter(g->getGameSize(), 
                 std::static_pointer_cast<SpaceInvaderGame>(g)->spriteManager->getPlayerSize())),
+        ColliderManaged(std::static_pointer_cast<SpaceInvaderGame>(g)->colliderManager),
         Entity(std::static_pointer_cast<SpaceInvaderGame>(g), ColliderId::PLAYER, 100, 
-                std::static_pointer_cast<SpaceInvaderGame>(g)->spriteManager->getPlayerSize()),
-        InputManaged(std::static_pointer_cast<SpaceInvaderGame>(g)->inputManager) 
-        {}
+               std::static_pointer_cast<SpaceInvaderGame>(g)->spriteManager->getPlayerSize()),
+        InputManaged(std::static_pointer_cast<SpaceInvaderGame>(g)->inputManager),
+        Shooter(-1, 3) {}
 
     std::unique_ptr<RenderRange> getPrimitives() const override {
         return sm.lock()->getPlayer();
@@ -39,15 +37,15 @@ public:
         ColliderManaged::initComponent(shared_from_this());
     }
 
-    void onInput(char c) override;
-
-    void onCollision(std::shared_ptr<ColliderManaged> other) override {
-        if(other->getColliderTypeId() == static_cast<int>(ColliderId::ENEMY)) {
-            if(!makeDamage(100)) {
-                destroy();
-            }
-        }
+    void beforeUpdate() override {
+        Shooter::beforeUpdate();
     }
 
-    ~Player() = default;
+    void onInput(char c) override;
+
+    void onCollision(std::shared_ptr<ColliderManaged> other) override;
+
+    ~Player() {
+        std::static_pointer_cast<SpaceInvaderGame>(game.lock())->gameOver();
+    }
 };

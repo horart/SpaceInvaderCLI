@@ -14,10 +14,11 @@ class GameObject : public Renderable
 private:
     Point pos;
     Point posToBeSet;
+    int privId;
 protected:
     std::weak_ptr<Game> game;
 public:
-    int id;
+    const int& id = privId;
 
 private:
     virtual void beforeUpdate() {};
@@ -25,7 +26,7 @@ private:
 protected:
     void setPosition(Point newPos);
 public:
-    GameObject() {}
+    GameObject() = default;
     GameObject(std::weak_ptr<Game> g, int id, Point p = {0, 0});
     virtual void init() {}
     Point getPosition() const override;

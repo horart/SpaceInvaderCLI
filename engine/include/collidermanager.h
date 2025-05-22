@@ -25,6 +25,7 @@ class ColliderManaged : virtual public GameObject {
 private:
     std::weak_ptr<ColliderManager> cm;
 public:
+    ColliderManaged() {}
     ColliderManaged(std::weak_ptr<ColliderManager> cm): cm(cm) {}
     void initComponent(std::shared_ptr<ColliderManaged> self) {
         cm.lock()->subscribe(id, self);

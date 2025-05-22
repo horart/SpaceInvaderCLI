@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <atomic>
 #include <csignal>
+#include "shooter.h"
 
 std::atomic<bool> sigint;
 int main()
@@ -14,8 +15,7 @@ int main()
     });
     std::shared_ptr<SpaceInvaderGame> game = 
         std::make_shared<SpaceInvaderGame>(std::make_unique<CLIRenderer>());
-    game->createObject<Player>();
-    game->createObject<Enemy>();
+    game->init();
     while(!sigint) {
         game->update();
     }

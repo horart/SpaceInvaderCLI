@@ -12,9 +12,11 @@ void ColliderManager::unsubscribe(int id) {
 }
 
 void ColliderManager::notify() {
-    for(auto& [id1, obj1w] : collidersById) {
+    for(auto it1 = collidersById.begin(), end = collidersById.end(); it1 != end; ++it1) {
+        auto& [id1, obj1w] = *it1;
         std::shared_ptr<ColliderManaged> obj1 = obj1w.lock();
-        for(auto& [id2, obj2w] : collidersById) {
+        for(auto it2 = it1; it2 != end; ++it2) {
+            auto& [id2, obj2w] = *it2;
             if(id1 == id2) continue;
             std::shared_ptr<ColliderManaged> obj2 = obj2w.lock();
             Point pos1 = obj1->getPosition();

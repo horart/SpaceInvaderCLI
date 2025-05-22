@@ -119,16 +119,16 @@ struct CellsRange : public RenderRange {
     }
 };
 
-struct PrimitivesRange {
+struct PrimitivesRange : public RenderRange {
     const std::vector<std::shared_ptr<RenderingPrimitive>>& primitives;
 
     PrimitivesRange(const std::vector<std::shared_ptr<RenderingPrimitive>>& p) : primitives(p) {}
 
-    std::unique_ptr<RenderIterator> begin() const {
+    std::unique_ptr<RenderIterator> begin() const override {
         return std::make_unique<PrimitivesIterator>(primitives);
     }
 
-    std::unique_ptr<RenderIterator> end() const {
+    std::unique_ptr<RenderIterator> end() const override {
         return std::make_unique<PrimitivesIterator>(primitives, primitives.size());
     }
 };

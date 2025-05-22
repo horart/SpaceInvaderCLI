@@ -1,10 +1,11 @@
 #include "gameobject.h"
 #include "game.h"
 
-GameObject::GameObject(std::weak_ptr<Game> g, int id, Point p)
-    : game(g), pos(p), posToBeSet(p), id(id) {
-    
-}
+GameObject::GameObject(std::weak_ptr<Game> g, int id, Point p): 
+    pos(p),
+    posToBeSet(p),
+    privId(id),
+    game(g) {}
 
 Point GameObject::getPosition() const {
     return pos;

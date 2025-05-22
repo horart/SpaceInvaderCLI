@@ -1,3 +1,5 @@
 careful update mechanics
 rewrite evrything to decorators
 rewrite gameobject and components to factories that call init
+reduce the use of shared_ptr
+change weak_ptr to ptr

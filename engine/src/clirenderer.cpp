@@ -19,7 +19,6 @@ CLIRenderer::CLIRenderer() {
     initscr();
     start_color();
     curs_set(0);
-    timeout(1000);
     getmaxyx(stdscr, maxY, maxX);
 }
 
@@ -56,7 +55,7 @@ void CLIRenderer::flush() {
     refresh();
 }
 void CLIRenderer::clear() {
-    ::clear();
+    erase();
 }
 Point CLIRenderer::getGameSize() const {
     return {maxX, maxY};
