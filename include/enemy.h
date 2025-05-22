@@ -57,7 +57,7 @@ public:
     }
 
     void onDestroy() override {
-        std::static_pointer_cast<SpaceInvaderGame>(game.lock())->addScore(10);
+        if(auto g = std::static_pointer_cast<SpaceInvaderGame>(game.lock())) g->addScore(10);
     }
 
 };

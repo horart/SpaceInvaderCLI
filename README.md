@@ -44,7 +44,7 @@ Use `A` and `D` to move, and `Space` to shoot
 *   **`InputManager`:** An abstract base class for handling input. It defines an interface for subscribing/unsubscribing input-aware objects (`InputManaged`) and notifying them of input events.
 *   **`InputManaged`:** A class that `GameObject`s can inherit from (virtually) to receive input. It holds a weak pointer to an `InputManager` and provides an `onInput` virtual method.
 *   **`ColliderManager`:** Manages collision detection between `ColliderManaged` objects. It allows objects to subscribe/unsubscribe and has a `notify` method to check for and report collisions.
-*   **`ColliderManaged`:** A class that `GameObject`s can inherit from (virtually) to participate in collision detection. It requires derived classes to provide a collider type ID and size, and an `onCollision` callback.
+*    **`ColliderManaged`:** A class that `GameObject`s can inherit from (virtually) to participate in collision detection. It requires derived classes to provide a collider type ID and size, and an `onCollision` callback.
 #### Utility
 *   **`Point`:** A simple struct representing a 2D coordinate with `x` and `y` integer members. It overloads several arithmetic and comparison operators for vector-like operations.
 

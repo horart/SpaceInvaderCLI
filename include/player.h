@@ -46,6 +46,7 @@ public:
     void onCollision(std::shared_ptr<ColliderManaged> other) override;
 
     ~Player() {
-        std::static_pointer_cast<SpaceInvaderGame>(game.lock())->gameOver();
+        if(auto g = game.lock())
+            std::static_pointer_cast<SpaceInvaderGame>(g)->gameOver();
     }
 };
